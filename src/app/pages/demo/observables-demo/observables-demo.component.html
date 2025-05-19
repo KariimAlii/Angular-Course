@@ -1,3 +1,10 @@
 <h1>{{ data }}</h1>
 
+<!--<div *ngFor="let user of users$ | async">-->
+<!--  Id: {{ user.id }}-->
+<!--  Name: {{ user.name }}-->
+<!--</div>-->
 
+<div *ngFor="let name of userNames$ | async">
+  {{ name }}
+</div>

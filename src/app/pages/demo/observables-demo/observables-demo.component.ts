@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {catchError, firstValueFrom, from, fromEvent, Observable, of} from 'rxjs';
+import {catchError, firstValueFrom, from, fromEvent, map, Observable, of} from 'rxjs';
 import {CustomObserver} from './custom-observer';
 
 @Component({
@@ -10,6 +10,8 @@ import {CustomObserver} from './custom-observer';
 })
 export class ObservablesDemoComponent implements OnInit {
   data: number = 0;
+  users$: Observable<{id: number, name: string, age: number}[]>;
+  userNames$: Observable<string[]>;
   constructor() {
 
     // https://www.learnrxjs.io/learn-rxjs/operators/creation/of
@@ -33,15 +35,20 @@ export class ObservablesDemoComponent implements OnInit {
       {id: 3, name: "Sherif", age:27},
     ]
 
-    const users$ = of(users);
+    this.users$ = of(users);
 
-    users$.subscribe((data) => {
+    this.userNames$ = this.users$
+      .pipe(
+        map(users => users.map(user => user.name))
+      )
+
+    this.users$.subscribe((data) => {
       console.log('users',data)
     })
 
     // convert stream to promise
     // users$.toPromise().then(data => console.log('users from promise',data))
-    firstValueFrom(users$).then(data => console.log('users from promise',data))
+    firstValueFrom(this.users$).then(data => console.log('users from promise',data))
 
     // convert promise to stream
     // const messagePromise = new Promise((resolve) => {
