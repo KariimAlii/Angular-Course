@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PostsService} from '../../services/posts.service';
+import {Post} from '../../models/post';
 
 @Component({
   selector: 'app-posts',
@@ -8,7 +9,7 @@ import {PostsService} from '../../services/posts.service';
   styleUrl: './posts.component.css'
 })
 export class PostsComponent implements OnInit {
-  posts: any[] = [];
+  posts: Post[] = [];
   loading = false;
   error: string | null = null;
 
