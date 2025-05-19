@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { PostsComponent } from './pages/posts/posts.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PostsUsingPromiseComponent } from './pages/posts-using-promise/posts-using-promise.component';
+import { ObservablesDemoComponent } from './pages/demo/observables-demo/observables-demo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostsComponent,
-    PostsUsingPromiseComponent
+    PostsUsingPromiseComponent,
+    ObservablesDemoComponent
   ],
   imports: [
     BrowserModule,
