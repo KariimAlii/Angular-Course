@@ -113,6 +113,8 @@ export class ObservablesDemoComponent implements OnInit {
 
     // Custom Observer (Not Recommended)
     numbers2$.subscribe(new CustomObserver())
+
+    this.activeUserSubject.subscribe((data) => {console.log("User Updated", data)})
   }
 
   ngOnInit(): void {
