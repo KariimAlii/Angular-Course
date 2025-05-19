@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {catchError, firstValueFrom, from, fromEvent, map, Observable, of} from 'rxjs';
+import {catchError, filter, firstValueFrom, from, fromEvent, map, Observable, of} from 'rxjs';
 import {CustomObserver} from './custom-observer';
 
 @Component({
@@ -10,8 +10,9 @@ import {CustomObserver} from './custom-observer';
 })
 export class ObservablesDemoComponent implements OnInit {
   data: number = 0;
-  users$: Observable<{id: number, name: string, age: number}[]>;
+  users$: Observable<{id: number, name: string, age: number, isActive: boolean}[]>;
   userNames$: Observable<string[]>;
+  activeUsers$: Observable<{id: number, name: string, age: number, isActive: boolean}[]>;
   constructor() {
 
     // https://www.learnrxjs.io/learn-rxjs/operators/creation/of
@@ -30,9 +31,9 @@ export class ObservablesDemoComponent implements OnInit {
 
     // convert js data to stream
     const users = [
-      {id: 1, name: "Ahmed", age:25},
-      {id: 2, name: "Maged", age:26},
-      {id: 3, name: "Sherif", age:27},
+      {id: 1, name: "Ahmed", age:25, isActive: true},
+      {id: 2, name: "Maged", age:26, isActive: true},
+      {id: 3, name: "Sherif", age:27, isActive: true},
     ]
 
     this.users$ = of(users);
@@ -45,6 +46,10 @@ export class ObservablesDemoComponent implements OnInit {
     this.users$.subscribe((data) => {
       console.log('users',data)
     })
+
+    this.activeUsers$ = this.users$.pipe(
+      filter(users => users.every(user => user.isActive)),
+    )
 
     // convert stream to promise
     // users$.toPromise().then(data => console.log('users from promise',data))

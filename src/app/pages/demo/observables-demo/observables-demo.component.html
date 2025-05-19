@@ -5,6 +5,11 @@
 <!--  Name: {{ user.name }}-->
 <!--</div>-->
 
-<div *ngFor="let name of userNames$ | async">
-  {{ name }}
+<!--<div *ngFor="let name of userNames$ | async">-->
+<!--  {{ name }}-->
+<!--</div>-->
+
+<div *ngFor="let user of activeUsers$ | async">
+  Id: {{ user.id }}
+  Name: {{ user.name }}
 </div>
