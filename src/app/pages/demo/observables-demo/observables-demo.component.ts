@@ -13,7 +13,8 @@ export class ObservablesDemoComponent implements OnInit {
   users$: Observable<{id: number, name: string, age: number, isActive: boolean}[]>;
   userNames$: Observable<string[]>;
   activeUsers$: Observable<{id: number, name: string, age: number, isActive: boolean}[]>;
-  activeUser$ = new BehaviorSubject<{id: number, name: string, age: number, isActive: boolean} | null>(null);
+  private activeUserSubject = new BehaviorSubject<{id: number, name: string, age: number, isActive: boolean} | null>(null);
+  public activeUser$ = this.activeUserSubject.asObservable();
   constructor() {
 
     // https://www.learnrxjs.io/learn-rxjs/operators/creation/of
@@ -155,6 +156,6 @@ export class ObservablesDemoComponent implements OnInit {
   }
 
   onClickUser(user: {id: number, name: string, age: number, isActive: boolean}) {
-    this.activeUser$.next(user)
+    this.activeUserSubject.next(user)
   }
 }
