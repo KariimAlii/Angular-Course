@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {catchError, filter, firstValueFrom, from, fromEvent, map, merge, Observable, of} from 'rxjs';
+import {BehaviorSubject, catchError, filter, firstValueFrom, from, fromEvent, map, merge, Observable, of} from 'rxjs';
 import {CustomObserver} from './custom-observer';
 
 @Component({
@@ -13,7 +13,7 @@ export class ObservablesDemoComponent implements OnInit {
   users$: Observable<{id: number, name: string, age: number, isActive: boolean}[]>;
   userNames$: Observable<string[]>;
   activeUsers$: Observable<{id: number, name: string, age: number, isActive: boolean}[]>;
-  activeUser$: Observable<{id: number, name: string, age: number, isActive: boolean}> = new Observable<{id: number, name: string, age: number, isActive: boolean}>();
+  activeUser$ = new BehaviorSubject<{id: number, name: string, age: number, isActive: boolean} | null>(null);
   constructor() {
 
     // https://www.learnrxjs.io/learn-rxjs/operators/creation/of
@@ -155,6 +155,6 @@ export class ObservablesDemoComponent implements OnInit {
   }
 
   onClickUser(user: {id: number, name: string, age: number, isActive: boolean}) {
-    this.activeUser$ =  merge(this.activeUser$, of(user))
+    this.activeUser$.next(user)
   }
 }
