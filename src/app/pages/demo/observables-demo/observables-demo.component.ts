@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {catchError, filter, firstValueFrom, from, fromEvent, map, Observable, of} from 'rxjs';
+import {catchError, filter, firstValueFrom, from, fromEvent, map, merge, Observable, of} from 'rxjs';
 import {CustomObserver} from './custom-observer';
 
 @Component({
@@ -13,6 +13,7 @@ export class ObservablesDemoComponent implements OnInit {
   users$: Observable<{id: number, name: string, age: number, isActive: boolean}[]>;
   userNames$: Observable<string[]>;
   activeUsers$: Observable<{id: number, name: string, age: number, isActive: boolean}[]>;
+  activeUser$: Observable<{id: number, name: string, age: number, isActive: boolean}> = new Observable<{id: number, name: string, age: number, isActive: boolean}>();
   constructor() {
 
     // https://www.learnrxjs.io/learn-rxjs/operators/creation/of
@@ -84,10 +85,10 @@ export class ObservablesDemoComponent implements OnInit {
     })
 
     // convert dom events to streams
-    const bodyClick$ = fromEvent(document, 'click')
-    bodyClick$.subscribe((data) => {
-      console.log('bodyClick',data)
-    })
+    // const bodyClick$ = fromEvent(document, 'click')
+    // bodyClick$.subscribe((data) => {
+    //   console.log('bodyClick',data)
+    // })
 
     // Custom Observable
 
@@ -151,5 +152,9 @@ export class ObservablesDemoComponent implements OnInit {
         throw error;
       })
     );
+  }
+
+  onClickUser(user: {id: number, name: string, age: number, isActive: boolean}) {
+    this.activeUser$ =  merge(this.activeUser$, of(user))
   }
 }

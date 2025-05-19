@@ -12,4 +12,9 @@
 <div *ngFor="let user of activeUsers$ | async">
   Id: {{ user.id }}
   Name: {{ user.name }}
+  <button (click)="onClickUser(user)">click</button>
+</div>
+
+<div>
+  Selected User {{ (activeUser$ | async)?.name }}
 </div>
