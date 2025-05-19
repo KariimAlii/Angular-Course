@@ -18,3 +18,7 @@
 <div>
   Selected User {{ (activeUser$ | async)?.name }}
 </div>
+
+<div *ngIf="activeUser$ | async as user">
+  Selected User {{ user.name }}
+</div>
