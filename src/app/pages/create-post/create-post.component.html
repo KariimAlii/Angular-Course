@@ -1,0 +1,65 @@
+<!-- src/app/posts/create-post/create-post.component.html -->
+<div class="form-container">
+  <h1>Create New Post</h1>
+
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()" novalidate>
+    <!-- Title Field -->
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required>
+
+      <mat-error *ngIf="title?.hasError('required')">
+        Title is required
+      </mat-error>
+      <mat-error *ngIf="title?.hasError('minlength')">
+        Title must be at least 5 characters
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Body Field -->
+    <mat-form-field appearance="outline">
+      <mat-label>Post Content</mat-label>
+      <textarea matInput formControlName="body" rows="5" required></textarea>
+
+      <mat-error *ngIf="body?.hasError('required')">
+        Content is required
+      </mat-error>
+      <mat-error *ngIf="body?.hasError('minlength')">
+        Content must be at least 20 characters
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="postForm.invalid || loading"
+      >
+        <span *ngIf="!loading">Create Post</span>
+        <span *ngIf="loading">Creating...</span>
+      </button>
+
+      <button
+        mat-button
+        type="button"
+        (click)="router.navigate(['/posts'])"
+      >
+        Cancel
+      </button>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="error" class="error-message">
+      <mat-icon>error</mat-icon>
+      {{ error }}
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="success" class="success-message">
+      <mat-icon>check_circle</mat-icon>
+      Post created successfully! Redirecting...
+    </div>
+  </form>
+</div>
