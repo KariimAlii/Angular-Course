@@ -20,7 +20,7 @@ export class CreatePostComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private apiService: PostsService,
-    private router: Router
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -65,4 +65,6 @@ export class CreatePostComponent implements OnInit {
 
   get title() { return this.postForm.get('title'); }
   get body() { return this.postForm.get('body'); }
+
+
 }

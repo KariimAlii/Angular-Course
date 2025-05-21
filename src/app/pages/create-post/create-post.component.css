@@ -1,33 +1,52 @@
-/* src/app/posts/create-post/create-post.component.scss */
 .form-container {
   max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+  margin: auto;
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
-mat-form-field {
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-control {
   width: 100%;
-  margin-bottom: 20px;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-control.invalid {
+  border-color: red;
+  background-color: #ffe6e6;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
 }
 
 .form-actions {
   display: flex;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 1rem;
 }
 
 .error-message {
-  color: #f44336;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 15px;
+  margin-top: 1rem;
+  color: red;
+  font-weight: bold;
 }
 
 .success-message {
-  color: #4caf50;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 15px;
+  margin-top: 1rem;
+  color: green;
+  font-weight: bold;
 }

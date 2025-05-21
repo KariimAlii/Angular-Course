@@ -32,7 +32,7 @@ export class PostsService {
    * @returns Observable with the created post data including its ID
    */
   createPost(postData: CreatePostDto): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/posts`, postData).pipe(
+    return this.http.post<any>(`${this.apiUrl}`, postData).pipe(
       catchError(error => {
         console.error('Error creating post:', error);
         return throwError(() => new Error('Failed to create post'));

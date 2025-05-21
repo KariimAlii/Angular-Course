@@ -1,39 +1,49 @@
-<!-- src/app/posts/create-post/create-post.component.html -->
 <div class="form-container">
   <h1>Create New Post</h1>
 
   <form [formGroup]="postForm" (ngSubmit)="onSubmit()" novalidate>
-    <!-- Title Field -->
-    <mat-form-field appearance="outline">
-      <mat-label>Title</mat-label>
-      <input matInput formControlName="title" required>
 
-      <mat-error *ngIf="title?.hasError('required')">
+    <!-- Title Field -->
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        required
+        class="form-control"
+        [class.invalid]="title?.invalid && (title?.touched || title?.dirty)"
+      />
+      <div class="error" *ngIf="title?.hasError('required')">
         Title is required
-      </mat-error>
-      <mat-error *ngIf="title?.hasError('minlength')">
+      </div>
+      <div class="error" *ngIf="title?.hasError('minlength')">
         Title must be at least 5 characters
-      </mat-error>
-    </mat-form-field>
+      </div>
+    </div>
 
     <!-- Body Field -->
-    <mat-form-field appearance="outline">
-      <mat-label>Post Content</mat-label>
-      <textarea matInput formControlName="body" rows="5" required></textarea>
-
-      <mat-error *ngIf="body?.hasError('required')">
+    <div class="form-group">
+      <label for="body">Post Content</label>
+      <textarea
+        id="body"
+        rows="5"
+        formControlName="body"
+        required
+        class="form-control"
+        [class.invalid]="body?.invalid && (body?.touched || body?.dirty)"
+      ></textarea>
+      <div class="error" *ngIf="body?.hasError('required')">
         Content is required
-      </mat-error>
-      <mat-error *ngIf="body?.hasError('minlength')">
+      </div>
+      <div class="error" *ngIf="body?.hasError('minlength')">
         Content must be at least 20 characters
-      </mat-error>
-    </mat-form-field>
+      </div>
+    </div>
 
     <!-- Form Actions -->
     <div class="form-actions">
       <button
-        mat-raised-button
-        color="primary"
         type="submit"
         [disabled]="postForm.invalid || loading"
       >
@@ -42,7 +52,6 @@
       </button>
 
       <button
-        mat-button
         type="button"
         (click)="router.navigate(['/posts'])"
       >
@@ -52,14 +61,13 @@
 
     <!-- Error Message -->
     <div *ngIf="error" class="error-message">
-      <mat-icon>error</mat-icon>
-      {{ error }}
+      ❌ {{ error }}
     </div>
 
     <!-- Success Message -->
     <div *ngIf="success" class="success-message">
-      <mat-icon>check_circle</mat-icon>
-      Post created successfully! Redirecting...
+      ✅ Post created successfully! Redirecting...
     </div>
+
   </form>
 </div>
