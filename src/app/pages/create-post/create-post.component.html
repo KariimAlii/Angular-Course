@@ -1,73 +1,43 @@
-<div class="form-container">
-  <h1>Create New Post</h1>
+<!-- create-post.component.html -->
+<div class="container">
+  <h2>Create New Post</h2>
 
-  <form [formGroup]="postForm" (ngSubmit)="onSubmit()" novalidate>
-
-    <!-- Title Field -->
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="title">Title</label>
-      <input
-        id="title"
-        type="text"
-        formControlName="title"
-        required
-        class="form-control"
-        [class.invalid]="title?.invalid && (title?.touched || title?.dirty)"
-      />
-      <div class="error" *ngIf="title?.hasError('required')">
-        Title is required
-      </div>
-      <div class="error" *ngIf="title?.hasError('minlength')">
-        Title must be at least 5 characters
+      <label>Title</label>
+      <input type="text" formControlName="title" class="form-control">
+      <div *ngIf="title?.invalid && (title?.dirty || title?.touched)" class="error">
+        <div *ngIf="title?.errors?.['required']">Title is required</div>
       </div>
     </div>
 
-    <!-- Body Field -->
     <div class="form-group">
-      <label for="body">Post Content</label>
-      <textarea
-        id="body"
-        rows="5"
-        formControlName="body"
-        required
-        class="form-control"
-        [class.invalid]="body?.invalid && (body?.touched || body?.dirty)"
-      ></textarea>
-      <div class="error" *ngIf="body?.hasError('required')">
-        Content is required
-      </div>
-      <div class="error" *ngIf="body?.hasError('minlength')">
-        Content must be at least 20 characters
+      <label>Content</label>
+      <textarea formControlName="body" class="form-control" rows="5"></textarea>
+      <div *ngIf="body?.invalid && (body?.dirty || body?.touched)" class="error">
+        <div *ngIf="body?.errors?.['required']">Content is required</div>
       </div>
     </div>
 
-    <!-- Form Actions -->
-    <div class="form-actions">
-      <button
-        type="submit"
-        [disabled]="postForm.invalid || loading"
-      >
-        <span *ngIf="!loading">Create Post</span>
-        <span *ngIf="loading">Creating...</span>
-      </button>
+    <button type="submit" [disabled]="postForm.invalid || loading" class="btn btn-primary">
+      {{ loading ? 'Creating...' : 'Create Post' }}
+    </button>
 
-      <button
-        type="button"
-        (click)="router.navigate(['/posts'])"
-      >
-        Cancel
-      </button>
+    <div *ngIf="error" class="alert alert-danger mt-3">
+      {{ error }}
     </div>
-
-    <!-- Error Message -->
-    <div *ngIf="error" class="error-message">
-      ❌ {{ error }}
-    </div>
-
-    <!-- Success Message -->
-    <div *ngIf="success" class="success-message">
-      ✅ Post created successfully! Redirecting...
-    </div>
-
   </form>
+
+  <!-- Display the created post -->
+  <div *ngIf="createdPost" class="post-details mt-5">
+    <h3>New Post Created Successfully!</h3>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ createdPost.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">User ID: {{ createdPost.userId }}</h6>
+        <p class="card-text">{{ createdPost.body }}</p>
+        <p class="text-success">Post ID: {{ createdPost.id }}</p>
+      </div>
+    </div>
+  </div>
 </div>

@@ -16,11 +16,12 @@ export class CreatePostComponent implements OnInit {
   loading = false;
   error: string | null = null;
   success = false;
+  createdPost: any = null;
 
   constructor(
     private fb: FormBuilder,
     private apiService: PostsService,
-    public router: Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -42,29 +43,26 @@ export class CreatePostComponent implements OnInit {
 
     this.loading = true;
     this.error = null;
-    this.success = false;
+    this.createdPost = null;
 
-    const postData: CreatePostDto = this.postForm.value;
-
-    this.apiService.createPost(postData).subscribe({
-      next: (response) => {
-        this.success = true;
+    this.apiService.createPost(this.postForm.value).subscribe({
+      next: () => {
+        // Response is already handled by the service's observable
         this.loading = false;
-        // Reset form after successful submission
-        this.postForm.reset();
-        // Navigate to post list after 2 seconds
-        setTimeout(() => this.router.navigate(['/posts']), 2000);
       },
       error: (err) => {
-        this.error = 'Failed to create post. Please try again.';
+        this.error = 'Failed to create post';
         this.loading = false;
-        console.error(err);
       }
+    });
+
+    // Subscribe to new posts
+    this.apiService.newPost$.subscribe(post => {
+      this.createdPost = post;
     });
   }
 
+
   get title() { return this.postForm.get('title'); }
   get body() { return this.postForm.get('body'); }
-
-
 }

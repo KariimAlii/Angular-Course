@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError, delay, Observable, retry, throwError} from 'rxjs';
+import {catchError, delay, Observable, retry, Subject, tap, throwError} from 'rxjs';
 import {Post} from '../models/post';
 import {CreatePostDto} from '../models/create-post-dto';
 
@@ -15,7 +15,10 @@ export class PostsService {
     })
   };
   private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+  private newPostSubject = new Subject<any>();
 
+  // Observable to emit new posts
+  newPost$ = this.newPostSubject.asObservable();
   constructor(private http: HttpClient) { }
 
   getPosts(): Observable<Post[]> {
@@ -33,9 +36,8 @@ export class PostsService {
    */
   createPost(postData: CreatePostDto): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, postData).pipe(
-      catchError(error => {
-        console.error('Error creating post:', error);
-        return throwError(() => new Error('Failed to create post'));
+      tap((createdPost) => {
+        this.newPostSubject.next(createdPost);
       })
     );
   }
